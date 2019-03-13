@@ -1,8 +1,8 @@
 <?php
 $nav_path = 'nav.php';
 include 'header.php';
-$sql = 'SELECT sales.*, product_name, unit_price, branch_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id WHERE sales.branch_id=' . $_SESSION['branch_id'];
-$sql2 = 'SELECT SUM(unit_price * sales.quantity) as total_sales FROM sales INNER JOIN product ON sales.product_id=product.product_id WHERE branch_id='.$_SESSION['branch_id'];
+$sql = 'SELECT sales.*, product_name, branch_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id WHERE sales.branch_id=' . $_SESSION['branch_id'];
+$sql2 = 'SELECT SUM(sales.unit_price * sales.quantity) as total_sales FROM sales WHERE branch_id='.$_SESSION['branch_id'];
 $stmt = $db->query($sql);
 if((@$_GET['search'])){
 	$start = "'" . @$_GET['start_date'] . "'";
@@ -12,7 +12,7 @@ if((@$_GET['search'])){
 }
 $stmt = $db->query($sql);
 $sales = $stmt->fetchAll(PDO::FETCH_OBJ);
-
+//echo '<pre>', var_dump($sales), '</pre>';
 $sth = $db->query($sql2);
 $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 ?>
@@ -53,7 +53,7 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 					<td><?php echo $s->sales_id?></td>
 					<td><?php echo $s->product_name?></td>
 					<td><?php echo $s->quantity?></td>
-					<td><?php echo $s->unit_price * $s->quantity?></td>
+					<td><?php echo $s->unit_price?></td>
 					<td><?php echo $s->branch_name?></td>
 					<td><?php echo date_format(date_create($s->sold), 'M d, Y')?></td>
 				</tr>

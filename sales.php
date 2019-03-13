@@ -131,7 +131,7 @@ function get_count(){
 $('#payout').click(function(){
 	if(data_set.length > 0){
 		$.each(data_set, function(index, val) {
-			$.post('add_sale.php', {product_id: val[0], quantity: val[2]}, function(data, textStatus, xhr) {
+			$.post('add_sale.php', {product_id: val[0], quantity: val[2], unit_price: val[3]}, function(data, textStatus, xhr) {
 				//console.log(xhr.responseText);
 			});
 			
