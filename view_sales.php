@@ -53,7 +53,7 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 					<td><?php echo $s->sales_id?></td>
 					<td><?php echo $s->product_name?></td>
 					<td><?php echo $s->quantity?></td>
-					<td><?php echo $s->unit_price?></td>
+					<td><?php echo ($s->unit_price * $s->quantity)?></td>
 					<td><?php echo $s->branch_name?></td>
 					<td><?php echo date_format(date_create($s->sold), 'M d, Y')?></td>
 				</tr>
