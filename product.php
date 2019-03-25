@@ -4,8 +4,8 @@ $nav_path = 'nav.php';
 include 'header.php';
 
 if(isset($_POST['submit'])){
-	$stmt = $db->prepare('INSERT INTO PRODUCT (product_name, unit_price, quantity) values (?, ?, ?)');
-	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['quantity']));
+	$stmt = $db->prepare('INSERT INTO PRODUCT (product_name, unit_price, quantity, branch_id) values (?, ?, ?, ?)');
+	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['quantity'], $_SESSION['branch_id']));
 	if($result){
 		echo '<script>window.onload = function(){alert("Product successfully added.")}</script>';
 	}
@@ -38,6 +38,10 @@ if(isset($_POST['submit'])){
 			</div>
 		</div>						
 	</form>
+	<div style="margin-bottom: 10px;">
+		<a href="product.php?replenish=true" class="btn btn-primary">View products to be replenished</a>
+		<a href="product.php" class="btn btn-primary">View all products</a>
+	</div>	
 	<table class="table table-bordered" id="table">
 		<thead>
 			<tr>
@@ -48,7 +52,12 @@ if(isset($_POST['submit'])){
 			</tr>
 		</thead>
 		<?php 
-		$stmt = $db->query('select * from product');
+		$replenish_point = 10;
+		$sql = 'select * from product WHERE branch_id=' . $_SESSION['branch_id'];
+		if(@$_GET['replenish'] == 'true'){
+			$sql .= ' AND quantity <= ' . $replenish_point;
+		}
+		$stmt = $db->query($sql);
 		$product = $stmt->fetchAll(PDO::FETCH_OBJ);
 		?>
 		<tbody>
