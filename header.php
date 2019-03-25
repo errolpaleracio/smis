@@ -1,9 +1,10 @@
 <?php
 session_start();
 if(basename($_SERVER['PHP_SELF']) != 'register.php'){
+	/*
 	if(isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) == 'index.php')
 		header('location: home.php');
-
+	*/
 	if(!isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) != 'index.php')
 		header('location: index.php');
 }

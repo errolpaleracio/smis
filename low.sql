@@ -27,7 +27,7 @@ CREATE TABLE `branch` (
   `branch_name` varchar(255) DEFAULT NULL,
   `branch_add` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`branch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'Branch 1','Lagasca St. Laoag City'),(2,'Branch 2',' Shamrock Laoag City');
+INSERT INTO `branch` VALUES (1,'Branch 1','Lagasca St. Laoag City'),(2,'Branch 2',' Shamrock Laoag City'),(3,'Owner',NULL);
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,9 +52,10 @@ CREATE TABLE `product` (
   `product_name` varchar(255) DEFAULT NULL,
   `unit_price` decimal(12,2) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
+  `critical_lvl` int(11) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +64,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (4,'Tornillio',130.00,10,1),(5,'Helmet',100.00,60,1),(6,'Test',1000.00,45,2),(7,'gg',5.00,60,2),(8,'flarings',5000.00,100,1);
+INSERT INTO `product` VALUES (4,'Tornillio',130.00,8,10,1),(5,'Helmet',100.00,60,10,1),(6,'Test',1000.00,45,10,2),(7,'gg',5.00,60,10,2),(8,'flarings',5000.00,100,10,1),(9,'magz',550.00,50,40,1),(10,'gold boltz',110.00,500,20,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +109,7 @@ CREATE TABLE `sales` (
   PRIMARY KEY (`sales_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +118,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (65,4,80,'2019-03-25',130.00,1);
+INSERT INTO `sales` VALUES (66,4,1,'2019-03-25',130.00,1),(67,4,1,'2019-03-25',130.00,3);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,7 +177,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES (1,'branch1','password','Lowie Pogi',NULL,NULL,NULL,1,1),(4,'owner','password','Owner','321321','321321','0000-00-00',1,2),(6,'branch2','password','Pat','Brgy 12 Magat Salamat Street Laoag City','09055383063','1999-02-08',2,1);
+INSERT INTO `user_account` VALUES (1,'branch1','password','Lowie Pogi',NULL,NULL,NULL,1,1),(4,'owner','password','Owner','321321','321321','0000-00-00',3,2),(6,'branch2','password','Pat','Brgy 12 Magat Salamat Street Laoag City','09055383063','1999-02-08',2,1);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -189,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-25  9:14:28
+-- Dump completed on 2019-03-25 15:27:09

@@ -4,8 +4,8 @@ $nav_path = 'nav.php';
 include 'header.php';
 
 if(isset($_POST['submit'])){
-	$stmt = $db->prepare('INSERT INTO PRODUCT (product_name, unit_price, quantity, branch_id) values (?, ?, ?, ?)');
-	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['quantity'], $_SESSION['branch_id']));
+	$stmt = $db->prepare('INSERT INTO PRODUCT (product_name, unit_price, quantity, branch_id, critical_lvl) values (?, ?, ?, ?, ?)');
+	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['quantity'], $_SESSION['branch_id'], $_POST['critical_lvl']));
 	if($result){
 		echo '<script>window.onload = function(){alert("Product successfully added.")}</script>';
 	}
@@ -33,6 +33,12 @@ if(isset($_POST['submit'])){
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-sm-2 control-label">Critical Level</label>
+			<div class="col-sm-4">
+				<input type="text" name="critical_lvl" class="form-control" required>
+			</div>
+		</div>		
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-4">
 				<input type="submit" name="submit" class="btn btn-primary">
 			</div>
@@ -52,11 +58,18 @@ if(isset($_POST['submit'])){
 			</tr>
 		</thead>
 		<?php 
-		$replenish_point = 10;
-		$sql = 'select * from product WHERE branch_id=' . $_SESSION['branch_id'];
-		if(@$_GET['replenish'] == 'true'){
-			$sql .= ' AND quantity <= ' . $replenish_point;
+		$sql = '';
+		if($_SESSION['branch_id'] != '3'){
+			$sql = 'select * from product WHERE branch_id=' . $_SESSION['branch_id'];
+			if(@$_GET['replenish'] == 'true')
+				$sql .= ' AND quantity <= critical_lvl';
 		}
+		else{
+			$sql = 'select * from product';	
+			if(@$_GET['replenish'] == 'true')
+				$sql .= ' WHERE quantity <= critical_lvl';
+		}
+		
 		$stmt = $db->query($sql);
 		$product = $stmt->fetchAll(PDO::FETCH_OBJ);
 		?>

@@ -1,8 +1,12 @@
 <?php
 $nav_path = 'nav.php';
 include 'header.php';
-$sql = 'SELECT sales.*, product_name, branch_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id WHERE sales.branch_id=' . $_SESSION['branch_id'];
-$sql2 = 'SELECT SUM(sales.unit_price * sales.quantity) as total_sales FROM sales WHERE branch_id='.$_SESSION['branch_id'];
+$sql = 'SELECT sales.*, product_name, branch_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id';
+$sql2 = 'SELECT SUM(sales.unit_price * sales.quantity) as total_sales FROM sales';
+if($_SESSION['branch_id'] != '3'){
+	$sql .= ' WHERE sales.branch_id=' . $_SESSION['branch_id'];
+	$sql2 .= ' WHERE branch_id='.$_SESSION['branch_id'];
+}
 $stmt = $db->query($sql);
 if((@$_GET['search'])){
 	$start = "'" . @$_GET['start_date'] . "'";
@@ -10,6 +14,8 @@ if((@$_GET['search'])){
 	$sql .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
 	$sql2 .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
 }
+
+echo $_SESSION['branch_id'];
 $stmt = $db->query($sql);
 $sales = $stmt->fetchAll(PDO::FETCH_OBJ);
 //echo '<pre>', var_dump($sales), '</pre>';

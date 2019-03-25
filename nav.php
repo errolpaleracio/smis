@@ -26,7 +26,7 @@
           </ul>
         </li>
         <?php else:?>
-          <li><a href="view_products.php">PRODUCTS <i class="fa fa-list"></i></a></li>
+          <li><a href="product.php">PRODUCTS <i class="fa fa-list"></i></a></li>
           <li><a href="view_sales.php">Sales <i class="fa fa-list"></i></a></li>
          
         <?php endif;?>   

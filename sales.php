@@ -1,7 +1,6 @@
 <?php
 $nav_path = 'nav.php';
 include 'header.php';
-
 /*
 if(isset($_POST['submit'])){
 	$stmt = $db->prepare('INSERT INTO PRODUCT (product_name, unit_price, quantity) values (?, ?, ?)');
@@ -71,13 +70,10 @@ $products = $db->query('SELECT * FROM product')->fetchAll(PDO::FETCH_OBJ);
 $('#salesForm').submit(function(e){
 	e.preventDefault();
 });
-
 get_count();
-
 var data_set = [];
 var table = $('.table').DataTable();
 var row_index = 0;
-
 $('input[name="submit"]').click(function(){
 	var $product = $('[name="product_id"]').find(':selected');
 	var product_name = $product.text();
@@ -105,7 +101,6 @@ $('input[name="submit"]').click(function(){
 		$quantity.val('');
 	}
 });
-
 function get_total_count(id){
 	var total_count = 0;
 	for(i = 0; i < data_set.length; i++){
@@ -114,11 +109,9 @@ function get_total_count(id){
 	}
 	return total_count;	
 } 
-
 $('[name="product_id"]').change(function(event) {
 	get_count();	
 });
-
 function get_count(){
 	$.get('get_count.php?product_id=' + $('[name="product_id"]').find(':selected').val(), 'json',function(data) {
 		var product = JSON.parse(data);
@@ -127,7 +120,6 @@ function get_count(){
 		$('[name="price"]').val(product.unit_price);
 	});
 }
-
 $('#payout').click(function(){
 	if(data_set.length > 0){
 		$.each(data_set, function(index, val) {
@@ -145,7 +137,6 @@ $('#payout').click(function(){
 		alert('Must add items first.')
 	}
 });
-
 $(document).on('click', '[name="remove_item"]', function(){
 	var index = $(this).parents('tr').index()
 	//console.log(row_index);
@@ -162,7 +153,6 @@ $(document).on('click', '[name="remove_item"]', function(){
 	table.row($(this).parents('tr')).remove().draw();
 	
 });
-
 var number = document.getElementById('number');
  
 // Listen for input event on numInput.

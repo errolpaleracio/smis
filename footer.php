@@ -36,7 +36,7 @@
 			$.post('login.php', $(this).serialize(), function(data, textStatus, xhr) {
 				console.log(xhr.responseText);
 				if(xhr.responseText == 1)
-					window.location.href='home.php';
+					window.location.href='index.php';
 				else{
 					alert('Invalid username or password.')
 

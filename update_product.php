@@ -4,8 +4,8 @@ include 'header.php';
 
 
 if(isset($_POST['submit'])){
-	$stmt = $db->prepare('UPDATE product SET product_name=?, unit_price=? WHERE product_id=?');
-	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['product_id']));
+	$stmt = $db->prepare('UPDATE product SET product_name=?, unit_price=?, critical_lvl=? WHERE product_id=?');
+	$result = $stmt->execute(array($_POST['product_name'], $_POST['unit_price'], $_POST['critical_lvl'], $_POST['product_id']));
 	if($result){
 		echo '<script>window.onload = function(){alert("Product successfully updated.")}</script>';
 	}
@@ -28,6 +28,12 @@ $product = $stmt->fetch(PDO::FETCH_OBJ);
 				<input type="text" name="unit_price" value="<?php echo $product->unit_price?>" class="form-control" required>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Critical Level</label>
+			<div class="col-sm-4">
+				<input type="text" name="critical_lvl" value="<?php echo $product->critical_lvl?>" class="form-control" required>
+			</div>
+		</div>		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-4">
 				<input type="submit" name="submit" class="btn btn-primary">
