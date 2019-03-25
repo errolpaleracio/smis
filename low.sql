@@ -52,8 +52,9 @@ CREATE TABLE `product` (
   `product_name` varchar(255) DEFAULT NULL,
   `unit_price` decimal(12,2) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +63,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (4,'Tornillio',130.00,90),(5,'Helmet',100.00,60),(6,'Test',1000.00,45),(7,'gg',5.00,60);
+INSERT INTO `product` VALUES (4,'Tornillio',130.00,10,1),(5,'Helmet',100.00,60,1),(6,'Test',1000.00,45,2),(7,'gg',5.00,60,2),(8,'flarings',5000.00,100,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +108,7 @@ CREATE TABLE `sales` (
   PRIMARY KEY (`sales_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +117,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (60,5,4,'2019-03-13',100.00,1),(61,4,13,'2019-03-13',125.00,1),(62,6,5,'2019-03-13',1000.00,1),(63,7,3,'2019-03-13',5.00,1),(64,4,10,'2019-03-13',125.00,1);
+INSERT INTO `sales` VALUES (65,4,80,'2019-03-25',130.00,1);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-13 16:55:50
+-- Dump completed on 2019-03-25  9:14:28
