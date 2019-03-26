@@ -47,7 +47,7 @@ if(isset($_POST['submit'])){
 	</form>
 	<?php endif;?>
 	<div style="margin-bottom: 10px;">
-		<a href="product.php?replenish=true" class="btn btn-primary">View products to be replenished</a>
+		<a href="product.php?replenish=true<?php if(isset($_GET['branch_id'])) echo '&branch_id=' . $_GET['branch_id'];?>" class="btn btn-primary">View products to be replenished</a>
 		<a href="product.php" class="btn btn-primary">View all products</a>
 	</div>	
 	<table class="table table-bordered" id="table">
@@ -59,8 +59,6 @@ if(isset($_POST['submit'])){
 				<th>Critical Level</th>
 				<?php if($_SESSION['branch_id'] != '3'):?>
 					<th>Actions</th>
-				<?php else:?>
-					<th>Branch</th>
 				<?php endif;?>
 			</tr>
 		</thead>
@@ -75,6 +73,8 @@ if(isset($_POST['submit'])){
 			$sql = 'select product.*, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id ';	
 			if(@$_GET['replenish'] == 'true')
 				$sql .= ' WHERE quantity <= critical_lvl';
+			if(isset($_GET['branch_id']))
+				$sql .= ' AND product.branch_id=' . $_GET['branch_id'];
 		}
 		
 		$stmt = $db->query($sql);
@@ -91,8 +91,7 @@ if(isset($_POST['submit'])){
 					<?php if($_SESSION['branch_id'] != '3'):?>
 						<td><a href="update_product.php?product_id=<?php echo $p->product_id?>">Update</a> | <a href="delete_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a> | 
 						<a href="#" class="restock" data-toggle="modal" data-target=".bs-example-modal-sm" id="<?php echo $p->product_id;?>">Restock</a></td>
-					<?php else:?>
-						<td><?php echo $p->branch_name?></td>
+					
 					<?php endif;?>
 				</tr>
 			<?php endforeach;?>

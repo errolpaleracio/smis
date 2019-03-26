@@ -13,6 +13,9 @@ if((@$_GET['search'])){
 	$end = "'" . @$_GET['end_date'] . "'";
 	$sql .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
 	$sql2 .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
+}else{
+	$sql .= ' WHERE sales.branch_id=' . $_GET['branch_id'];
+	$sql2 .= ' WHERE branch_id='.$_GET['branch_id'];
 }
 
 echo $_SESSION['branch_id'];

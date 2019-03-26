@@ -26,9 +26,20 @@
           </ul>
         </li>
         <?php else:?>
-          <li><a href="product.php">View Products <i class="fa fa-list"></i></a></li>
-          <li><a href="view_sales.php">View Sales <i class="fa fa-list"></i></a></li>
-         
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="product.php?branch_id=1">BRANCH 1 <i class="fa fa-book"></i></a></li>
+				<li><a href="product.php?branch_id=2">BRANCH 2 <i class="fa fa-book"></i></a></li>
+			</ul>
+		</li>
+        <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SALES <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="view_sales.php?branch_id=1">BRANCH 1 <i class="fa fa-book"></i></a></li>
+				<li><a href="view_sales.php?branch_id=2">BRANCH 2 <i class="fa fa-book"></i></a></li>
+			</ul>
+		</li> 
         <?php endif;?>   
 		<li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $_SESSION['name']?> <span class="caret"></span></a>
