@@ -1,16 +1,20 @@
 <?php
 session_start();
+include 'configure.php';
+include 'db.php';
 if(basename($_SERVER['PHP_SELF']) != 'register.php'){
 	/*
 	if(isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) == 'index.php')
 		header('location: home.php');
 	*/
-	if(!isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) != 'index.php')
+	if(!isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) != 'index.php'){
 		header('location: index.php');
+		
+	}
+	
+	
 }
 
-include 'configure.php';
-include 'db.php';
 $branch = $db->prepare('SELECT branch_name FROM branch WHERE branch_id=?');
 @$branch->execute(array($_SESSION['branch_id']));
 @$title = $branch->fetch(PDO::FETCH_OBJ)->branch_name;

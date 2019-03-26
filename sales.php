@@ -10,7 +10,9 @@ if(isset($_POST['submit'])){
 	}
 }
 */
-$products = $db->query('SELECT * FROM product')->fetchAll(PDO::FETCH_OBJ);
+
+
+$products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['branch_id'])->fetchAll(PDO::FETCH_OBJ);
 ?>
 <div class="container">
 	<div class="col-sm-9">
@@ -164,6 +166,15 @@ number.onkeydown = function(e) {
     }
 }
 </script>
+
 <?php
 include 'footer.php';
+if(isset($_SESSION['branch_id'])){
+	$sql = 'select count(*) as prod_count from product where quantity <= critical_lvl AND branch_id='.$_SESSION['branch_id'];
+	$prod = $db->query($sql);
+	$result = $prod->fetch(PDO::FETCH_OBJ)->prod_count;
+	if($result > 0)
+		echo '<script>alert("There are products that has reach its critical levels. Please Replenish them.")</script>';
+	
+}
 ?>

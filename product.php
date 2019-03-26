@@ -13,6 +13,7 @@ if(isset($_POST['submit'])){
 ?>
 
 <div class="container">
+	<?php if($_SESSION['branch_id'] != '3'):?>
 	<form class="form-horizontal" method="post">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Product Name</label>
@@ -44,6 +45,7 @@ if(isset($_POST['submit'])){
 			</div>
 		</div>						
 	</form>
+	<?php endif;?>
 	<div style="margin-bottom: 10px;">
 		<a href="product.php?replenish=true" class="btn btn-primary">View products to be replenished</a>
 		<a href="product.php" class="btn btn-primary">View all products</a>
@@ -54,23 +56,29 @@ if(isset($_POST['submit'])){
 				<th>Product Name</th>
 				<th>Quantity</th>
 				<th>Unit Price</th>
-				<th>Actions</th>
+				<th>Critical Level</th>
+				<?php if($_SESSION['branch_id'] != '3'):?>
+					<th>Actions</th>
+				<?php else:?>
+					<th>Branch</th>
+				<?php endif;?>
 			</tr>
 		</thead>
 		<?php 
 		$sql = '';
 		if($_SESSION['branch_id'] != '3'){
-			$sql = 'select * from product WHERE branch_id=' . $_SESSION['branch_id'];
+			$sql = 'select product.*, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id WHERE product.branch_id=' . $_SESSION['branch_id'];
 			if(@$_GET['replenish'] == 'true')
 				$sql .= ' AND quantity <= critical_lvl';
 		}
 		else{
-			$sql = 'select * from product';	
+			$sql = 'select product.*, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id ';	
 			if(@$_GET['replenish'] == 'true')
 				$sql .= ' WHERE quantity <= critical_lvl';
 		}
 		
 		$stmt = $db->query($sql);
+		
 		$product = $stmt->fetchAll(PDO::FETCH_OBJ);
 		?>
 		<tbody>
@@ -79,8 +87,13 @@ if(isset($_POST['submit'])){
 					<td><?php echo $p->product_name?></td>
 					<td><?php echo $p->quantity?></td>
 					<td><?php echo $p->unit_price?></td>
-					<td><a href="update_product.php?product_id=<?php echo $p->product_id?>">Update</a> | <a href="delete_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a> | 
-					<a href="#" class="restock" data-toggle="modal" data-target=".bs-example-modal-sm" id="<?php echo $p->product_id;?>">Restock</a></td>
+					<td><?php echo $p->critical_lvl?></td>
+					<?php if($_SESSION['branch_id'] != '3'):?>
+						<td><a href="update_product.php?product_id=<?php echo $p->product_id?>">Update</a> | <a href="delete_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a> | 
+						<a href="#" class="restock" data-toggle="modal" data-target=".bs-example-modal-sm" id="<?php echo $p->product_id;?>">Restock</a></td>
+					<?php else:?>
+						<td><?php echo $p->branch_name?></td>
+					<?php endif;?>
 				</tr>
 			<?php endforeach;?>
 		</tbody>
@@ -120,6 +133,7 @@ $(document).ready(function(){
 		var id = $(this).attr('id');
 		$('[name="id"]').val(id);
 	});	
+	$('#table').DataTable();
 });
 </script>
 <?php

@@ -26,15 +26,19 @@
           </ul>
         </li>
         <?php else:?>
-          <li><a href="product.php">PRODUCTS <i class="fa fa-list"></i></a></li>
-          <li><a href="view_sales.php">Sales <i class="fa fa-list"></i></a></li>
+          <li><a href="product.php">View Products <i class="fa fa-list"></i></a></li>
+          <li><a href="view_sales.php">View Sales <i class="fa fa-list"></i></a></li>
          
         <?php endif;?>   
-          <li><a href="logout.php">Logout <i class="fa fa-user"></i></a></li>
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $_SESSION['name']?> <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="logout.php">Logout <i class="fa fa-user"></i></a></li>
+			</ul>
+		</li>
         <?php endif;?>
         <?php if(!isset($_SESSION['name'])):?> 
           <li><a href="#" data-toggle="modal" data-target="#loginModal">LOGIN <i class="fa fa-user"></i></a></li>
-          <li><a href="register.php">Register <i class="fa fa-book"></i></a></li>
         <?php endif;?>
       </ul>
     </div><!-- /.navbar-collapse -->
