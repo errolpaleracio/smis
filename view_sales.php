@@ -6,6 +6,9 @@ $sql2 = 'SELECT SUM(sales.unit_price * sales.quantity) as total_sales FROM sales
 if($_SESSION['branch_id'] != '3'){
 	$sql .= ' WHERE sales.branch_id=' . $_SESSION['branch_id'];
 	$sql2 .= ' WHERE branch_id='.$_SESSION['branch_id'];
+}else{
+	$sql .= ' WHERE sales.branch_id=' . $_GET['branch_id'];
+	$sql2 .= ' WHERE branch_id='.$_GET['branch_id'];
 }
 $stmt = $db->query($sql);
 if((@$_GET['search'])){
@@ -13,12 +16,9 @@ if((@$_GET['search'])){
 	$end = "'" . @$_GET['end_date'] . "'";
 	$sql .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
 	$sql2 .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
-}else{
-	$sql .= ' WHERE sales.branch_id=' . $_GET['branch_id'];
-	$sql2 .= ' WHERE branch_id='.$_GET['branch_id'];
 }
 
-echo $_SESSION['branch_id'];
+//echo $sql . '<br>' . $sql2;
 $stmt = $db->query($sql);
 $sales = $stmt->fetchAll(PDO::FETCH_OBJ);
 //echo '<pre>', var_dump($sales), '</pre>';
@@ -30,6 +30,9 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 	<h1>Total Sales: <?php echo $total_sales->total_sales?></h1>
 	<div class="row">
 		<form method="GET" action="">
+		<?php if(isset($_GET['branch_id'])):?>
+			<input type="hidden" name="branch_id" value="<?php echo $_GET['branch_id']?>">
+		<?php endif;?>
 		<div class="input-daterange">
 			<div class="col-sm-3">
 				<input type="text" name="start_date" id="start_date" class="form-control" value="<?php echo @$_GET['start_date']?>"/>
