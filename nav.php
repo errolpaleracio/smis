@@ -16,13 +16,13 @@
       <ul class="nav navbar-nav navbar-right">
         <?php if(isset($_SESSION['name'])):?>
         <?php if($_SESSION['role_id'] == '1'):?>
-          <li><a href="product.php">PRODUCTS <i class="fa fa-book"></i></a></li>
+          <li><a href="product.php"><i class="fa fa-shopping-cart"></i> PRODUCTS</a></li>
           
           <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SALES <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-book"></i> SALES <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="sales.php">ADD SALES <i class="fa fa-book"></i></a></li>
-            <li><a href="view_sales.php">VIEW SALES <i class="fa fa-book"></i></a></li>
+            <li><a href="sales.php"><i class="fa fa-plus"></i> ADD SALES</a></li>
+            <li><a href="view_sales.php"><i class="fa fa-list"></i> VIEW SALES</a></li>
           </ul>
         </li>
         <?php else:?>
@@ -42,9 +42,11 @@
 		</li> 
         <?php endif;?>   
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $_SESSION['name']?> <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $_SESSION['name']?> <i class="fa fa-user"></i><span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a href="logout.php">Logout <i class="fa fa-user"></i></a></li>
+				<li><a href="#" data-toggle="modal" data-target="#changeUsernameModal"><i class="fa fa-gear"></i> Change Username </i></a></li>
+				<li><a href="#" data-toggle="modal" data-target="#changePasswordModal"><i class="fa fa-gear"></i> Change Password </i></a></li>
+				<li><a href="logout.php"><i class="fa fa-sign-out"></i> Logout</i></a></li>
 			</ul>
 		</li>
         <?php endif;?>
