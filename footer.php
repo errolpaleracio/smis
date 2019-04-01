@@ -22,10 +22,30 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="submit" class="btn btn-primary">Login</button>
+			  <input type="button" id="forgotPassword" class="btn btn-default" value="forget password">
 		    </div>
 		  </div>
-		</form>        
+		  
+		</form>
+			<div id="forgetPasswordField" class="hidden">
+			<form id="getPasswordHintForm" class="form-horizontal">
+			  <div class="form-group">
+				<label class="col-sm-2 control-label">Username</label>
+				<div class="col-sm-10">
+				  <input type="text" name="check_username" id="checkUsername" class="form-control" placeholder="Username" required>
+				  <span id="error_check_username" class="text-primary pull-left" style="font-size: 1.3em"></span>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+				  <button type="submit" class="btn btn-primary pull-left">Get Password hint</button>
+				</div>
+			  </div>
+		    </form> 
+			</div>
       </div>
+		
+	  
     </div>
   </div>
 </div>
@@ -166,7 +186,7 @@
 				dataType: 'json',
 				async: false,
 				success: function(data) {
-					if(old_password == data.password){
+					if($.md5(old_password) == data.password){
 						$('#error_old_password').text('');
 					}
 					else{
@@ -180,15 +200,16 @@
 			
 			if(isValid){
 				$.getJSON('get_session_data.php', function(data){
+						
 						$.post('change-password.php', {"password": new_password, "user_account_id": data.user_account_id}, function(data, textStatus, xhr) {
-						if(xhr.responseText == 1){
-							alert("Password Successfully Changed");
-							$('input[name="old_password"]').val('');
-							$('input[name="new_password"]').val('');
-							$('input[name="confirm_password"]').val('');
-							
-						}
-					});
+							if(xhr.responseText == 1){
+								alert("Password Successfully Changed");
+								$('input[name="old_password"]').val('');
+								$('input[name="new_password"]').val('');
+								$('input[name="confirm_password"]').val('');
+								
+							}
+						});
 				});
 			}
 		});
@@ -230,6 +251,30 @@
 					
 				});
 			}
+		});
+		
+		$('#forgotPassword').on('click', function(){
+			$('#forgetPasswordField').toggleClass('hidden');
+		});
+		
+		$('#getPasswordHintForm').on('submit', function(e){
+			var username = $('#checkUsername').val();
+			e.preventDefault();
+			
+			
+			$.ajax({
+				url: 'get-password-hint.php',
+				//dataType: 'json',
+				async: false,
+				data: {"username": username},
+				success: function(data) {
+					if(data !== '')
+						$('#error_check_username').text('Password hint: ' +  data);
+					else
+						$('#error_check_username').text('User does not exists');
+				}
+			});
+			
 		});
 	</script>
 </body>

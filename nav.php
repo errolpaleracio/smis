@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <?php if(isset($_SESSION['name'])):?>
-        <?php if($_SESSION['role_id'] == '1'):?>
+        <?php if($_SESSION['branch_id'] != '3'):?>
           <li><a href="product.php"><i class="fa fa-shopping-cart"></i> PRODUCTS</a></li>
           
           <li class="dropdown">
@@ -26,6 +26,7 @@
           </ul>
         </li>
         <?php else:?>
+		<li><a href="create-account.php"><i class="fa fa-shopping-cart"></i> CREATE ACCOUNT</a></li>
 		<li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
 			<ul class="dropdown-menu">
@@ -42,7 +43,7 @@
 		</li> 
         <?php endif;?>   
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $_SESSION['name']?> <i class="fa fa-user"></i><span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo ucwords($_SESSION['name'])?> <i class="fa fa-user"></i><span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a href="#" data-toggle="modal" data-target="#changeUsernameModal"><i class="fa fa-gear"></i> Change Username </i></a></li>
 				<li><a href="#" data-toggle="modal" data-target="#changePasswordModal"><i class="fa fa-gear"></i> Change Password </i></a></li>

@@ -14,13 +14,13 @@ include 'header.php';
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 	    <div class="item active">
-	      <img src="img/large.jpg" alt="Dog" width="1500px" height="300px">
+	      <img src="img/ez.jpg" alt="Dog" width="1500px" height="300px">
 	      <div class="carousel-caption">
 	        
 	      </div>
 	    </div>
 	    <div class="item">
-	      <img src="img/Miyazono.Kaori.full.2021783.jpg" alt="Cat" width="1500px" height="300px">
+	      <img src="img/ez1.jpg" alt="img1" width="1500px" height="300px">
 	      <div class="carousel-caption">
 	        		<div class="item">
 			

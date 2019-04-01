@@ -2,6 +2,7 @@
 session_start();
 include 'configure.php';
 include 'db.php';
+//echo '<PRE>', var_dump($_SESSION), '</pre>';
 if(basename($_SERVER['PHP_SELF']) != 'register.php'){
 	/*
 	if(isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) == 'index.php')
@@ -33,6 +34,15 @@ $branch = $db->prepare('SELECT branch_name FROM branch WHERE branch_id=?');
 	<script type="text/javascript" src="js/datatables.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="js/datatables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.md5.js"></script>
+	
+	<script type="text/javascript" src="js/datatables/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="js/datatables/buttons.flash.min.js"></script>
+	<script type="text/javascript" src="js/datatables/jszip.min.js"></script>
+	<script type="text/javascript" src="js/datatables/pdfmake.min.js"></script>
+	<script type="text/javascript" src="js/datatables/vfs_fonts.js"></script>
+	<script type="text/javascript" src="js/datatables/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="js/datatables/buttons.print.min.js"></script>
 </head>
 <body>
 	<?php include $nav_path;?>

@@ -55,6 +55,8 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 				<th>Product</th>
 				<th>Quantity</th>
 				<th>Total Price</th>
+				<th>Discount</th>
+				<th>Discounted Price</th>
 				<th>Branch</th>
 				<th>Date of Purchased</th>
 			</tr>
@@ -66,6 +68,8 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 					<td><?php echo $s->product_name?></td>
 					<td><?php echo $s->quantity?></td>
 					<td><?php echo ($s->unit_price * $s->quantity)?></td>
+					<td><?php echo $s->discount?></td>
+					<td><?php echo ($s->unit_price * $s->quantity) - $s->discount?></td>
 					<td><?php echo $s->branch_name?></td>
 					<td><?php echo date_format(date_create($s->sold), 'M d, Y')?></td>
 				</tr>
@@ -79,7 +83,10 @@ $('.input-daterange').datepicker({
 	format: "yyyy-mm-dd",
 	autoclose: true
 });
-$('#order_data').DataTable();
+$('#order_data').DataTable({
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+});
 </script>
 <?php
 include 'footer.php';

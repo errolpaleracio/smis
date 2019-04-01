@@ -36,7 +36,13 @@ $products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['bra
 				<div class="col-sm-2">
 					<input type="text" name="on_hand" class="form-control" disabled>
 				</div>
-			</div>				
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Discount</label>
+				<div class="col-sm-4">
+					<input type="text" name="discount" class="form-control" value="0" required min="1">
+				</div>
+			</div>			
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-4">
@@ -63,6 +69,8 @@ $products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['bra
 				<th>Product Name</th>
 				<th>Quantity</th>
 				<th class="hide_it">Price</th>
+				<th>Discount</th>
+				<th>Discounted Price</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -82,19 +90,22 @@ $('input[name="submit"]').click(function(){
 	var product_id = $product.val();
 	var $quantity = $('input[name="quantity"]'); 
 	var quantity = $quantity.val();
+	var $discount = $('input[name="discount"]'); 
+	var discount = $discount.val();
 	var price = $('input[name="price"]').val();
 	var on_hand = $('[name="on_hand"]').val();
 		
 	if(parseInt(on_hand) >= parseInt(quantity)){
 		
-		data_set.push([product_id, product_name, quantity, price]);
+		data_set.push([product_id, product_name, quantity, price, discount]);
 		var total = 0;
 		for(i = 0; i < data_set.length; i++){
 			total += parseFloat(data_set[i][2] * data_set[i][3]);
 		}
 		$quantity.val('');
+		$discount.val('0');
 		$('.total').text('Total: Php: ' + total)
-		table.row.add([product_id, product_name, quantity, price * quantity, '<input type="button" name="remove_item" value="Remove Item" class="btn btn-danger">']).draw();
+		table.row.add([product_id, product_name, quantity, price * quantity, discount, price * quantity - discount,'<input type="button" name="remove_item" value="Remove Item" class="btn btn-danger">']).draw();
 		row_index++;
 		$('[name="on_hand"]').val(on_hand-quantity);
 		
@@ -125,7 +136,7 @@ function get_count(){
 $('#payout').click(function(){
 	if(data_set.length > 0){
 		$.each(data_set, function(index, val) {
-			$.post('add_sale.php', {product_id: val[0], quantity: val[2], unit_price: val[3]}, function(data, textStatus, xhr) {
+			$.post('add_sale.php', {product_id: val[0], quantity: val[2], unit_price: val[3], discount: val[4]}, function(data, textStatus, xhr) {
 				//console.log(xhr.responseText);
 			});
 			

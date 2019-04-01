@@ -53,9 +53,10 @@ CREATE TABLE `product` (
   `unit_price` decimal(12,2) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `critical_lvl` int(11) DEFAULT NULL,
+  `archived` bit(1) DEFAULT b'0',
   `branch_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (4,'Tornillio',130.00,8,10,1),(5,'Helmet',100.00,60,10,1),(6,'Test',1000.00,45,10,2),(7,'gg',5.00,60,10,2),(8,'flarings',5000.00,100,10,1),(9,'magz',550.00,50,40,1),(10,'gold boltz',110.00,500,20,1);
+INSERT INTO `product` VALUES (11,'Hand Grip (Domino)',150.00,30,30,'\0',1),(12,'Air Filter (Yamakoto)',150.00,250,20,'\0',1),(13,'Handle Lever (MTR)',500.00,70,20,'\0',1),(14,'Horn (Global)',200.00,79,20,'\0',1),(15,'Slider (Rizoma)',350.00,120,40,'\0',1),(16,'Brake Lamp (Type R)',100.00,50,10,'\0',1),(17,'Volt Meter (DSK)',200.00,50,15,'\0',1),(18,'Led (Global)',450.00,85,20,'\0',1),(19,'Ignition Switch (Tamago)',150.00,90,20,'\0',1),(20,'Spark Plug (NGK)',150.00,100,20,'\0',1),(21,'Flasher (POSH)',100.00,120,20,'\0',1),(22,'Break Shoe (Kawata)',100.00,90,15,'\0',1),(23,'Rear Sprocket (KSR)',250.00,120,20,'\0',1),(24,'Side Mirror (KMN)',100.00,110,30,'\0',1),(25,'Flyball (Global)',250.00,90,20,'\0',1),(26,'CDI (E-power)',250.00,100,20,'\0',1),(27,'Bulb (E-power)',35.00,130,20,'\0',1),(28,'Spray Paint (BOSNY)',120.00,90,10,'\0',1),(29,'Oil Filter (Yamaha)',85.00,110,20,'\0',1),(30,'Bering (KSR)',75.00,100,20,'\0',1),(31,'Break Pad (GPC)',100.00,115,20,'\0',1),(32,'Battery (Motolight)',570.00,15,10,'\0',1),(33,'Helmet (NHK)',3000.00,20,5,'\0',1),(34,'Shocks (RG3)',650.00,30,10,'\0',1),(35,'Sit Cover (Monster)',150.00,80,20,'\0',1),(36,'Brake Fluid (Total)',50.00,110,20,'\0',1),(37,'Knee Pad (MKT)',550.00,60,15,'\0',1),(38,'Battery (Motolight)',570.00,60,10,'\0',2),(39,'Head Packing (Gonvince)',250.00,100,10,'\0',2),(40,'Helmet (NHK)',3000.00,40,10,'\0',2),(41,'Electrical Tape (Armak)',30.00,100,20,'\0',2),(42,'Side Gasket (Apple)',85.00,50,10,'\0',2),(43,'Gear Oil (Top 1)',120.00,60,10,'\0',2),(44,'Mirror (Mokoto)',170.00,70,10,'\0',2),(45,'Headlight (Japan)',300.00,95,15,'\0',2),(46,'Tail Light (Japan)',200.00,50,10,'\0',2),(47,'Oil Filter (Yamaha)',85.00,80,15,'\0',2),(48,'Oil Filter (Suzuki)',85.00,60,10,'\0',2),(49,'Oil Filter (Kawasaki)',85.00,65,15,'\0',2),(50,'Spark Plug cap (E-power)',35.00,80,15,'\0',2),(51,'Throttle cable (YSK)',100.00,80,10,'\0',2),(52,'Clutch cable (YSK)',100.00,80,10,'\0',2),(53,'Brake cable (YSK)',100.00,85,10,'\0',2),(54,'Speedo cable (YSK)',100.00,90,15,'\0',2),(55,'Fuel tank cap (KSR)',250.00,80,15,'\0',2),(56,'Sprocket (Sun)',85.00,90,20,'\0',2),(57,'Spray Paint (BOSNY)',120.00,90,10,'\0',2),(58,'Rim (SPD)',1000.00,80,10,'\0',2),(59,'Sit Cover (Monster)',150.00,80,10,'\0',2),(60,'Volt Meter (DSK)',200.00,50,10,'\0',2),(61,'Horn (Global)',200.00,70,15,'\0',2);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,11 +106,12 @@ CREATE TABLE `sales` (
   `quantity` int(11) DEFAULT NULL,
   `sold` date NOT NULL,
   `unit_price` decimal(13,2) DEFAULT NULL,
+  `discount` decimal(11,2) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`sales_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +120,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (66,4,1,'2019-03-25',130.00,1),(67,4,1,'2019-03-25',130.00,3);
+INSERT INTO `sales` VALUES (1,12,10,'2019-04-01',150.00,20.00,1);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,15 +162,13 @@ CREATE TABLE `user_account` (
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `contact_no` varchar(255) DEFAULT NULL,
-  `birth_date` date DEFAULT NULL,
+  `password_hint` varchar(255) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT '1',
   PRIMARY KEY (`user_account_id`),
-  KEY `role_id` (`role_id`),
   KEY `branch_id` (`branch_id`),
-  CONSTRAINT `user_account_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON UPDATE CASCADE,
   CONSTRAINT `user_account_ibfk_2` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES (1,'branch1','password','Lowie Pogi',NULL,NULL,NULL,1,1),(4,'owner','password','Owner','321321','321321','0000-00-00',3,2),(6,'branch2','password','Pat','Brgy 12 Magat Salamat Street Laoag City','09055383063','1999-02-08',2,1);
+INSERT INTO `user_account` VALUES (1,'branch1','5f4dcc3b5aa765d61d8327deb882cf99','Lowie Pogi','Brgy 12 Magat Salamat Street Laoag City','09175340121','p******d',1,1),(4,'owner','5f4dcc3b5aa765d61d8327deb882cf99','Owner','321321','321321','p******d',3,1),(6,'branch2','5f4dcc3b5aa765d61d8327deb882cf99','Pat','Brgy 12 Magat Salamat Street Laoag City','09055383063','p******d',2,1),(10,'jmsaldua','5f4dcc3b5aa765d61d8327deb882cf99','jm saldua','address','12313','p******d',1,1);
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -190,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-25 15:27:09
+-- Dump completed on 2019-04-02  0:03:14
