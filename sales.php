@@ -100,7 +100,7 @@ $('input[name="submit"]').click(function(){
 		data_set.push([product_id, product_name, quantity, price, discount]);
 		var total = 0;
 		for(i = 0; i < data_set.length; i++){
-			total += parseFloat(data_set[i][2] * data_set[i][3]);
+			total += parseFloat(data_set[i][2] * data_set[i][3] - data_set[i][4]);
 		}
 		$quantity.val('');
 		$discount.val('0');
