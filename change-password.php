@@ -7,4 +7,4 @@ $stmt->bindParam(':password', md5($_POST['password']));
 $stmt->bindParam(':user_account_id', $_POST['user_account_id']);
 $stmt->bindParam(':password_hint', substr_replace($_POST['password'], str_repeat('*', strlen($_POST['password']) - 2), 1, strlen($_POST['password']) - 2));
 echo $stmt->execute();
-$_SESSION['password'] = $_POST['password'];
+$_SESSION['password'] = md5($_POST['password']);

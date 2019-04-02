@@ -204,10 +204,7 @@
 						$.post('change-password.php', {"password": new_password, "user_account_id": data.user_account_id}, function(data, textStatus, xhr) {
 							if(xhr.responseText == 1){
 								alert("Password Successfully Changed");
-								$('input[name="old_password"]').val('');
-								$('input[name="new_password"]').val('');
-								$('input[name="confirm_password"]').val('');
-								
+								location.reload();
 							}
 						});
 				});
