@@ -12,7 +12,7 @@ if(isset($_POST['submit'])){
 */
 
 
-$products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['branch_id'])->fetchAll(PDO::FETCH_OBJ);
+$products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['branch_id'] . ' and archived=0')->fetchAll(PDO::FETCH_OBJ);
 ?>
 <div class="container">
 	<div class="col-sm-9">

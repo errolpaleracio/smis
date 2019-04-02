@@ -48,7 +48,8 @@ if(isset($_POST['submit'])){
 	<?php endif;?>
 	<div style="margin-bottom: 10px;">
 		<a href="product.php?replenish=true<?php if(isset($_GET['branch_id'])) echo '&branch_id=' . $_GET['branch_id'];?>" class="btn btn-primary">View products to be replenished</a>
-		<a href="product.php" class="btn btn-primary">View all products</a>
+		<a href="product.php?<?php if(isset($_GET['branch_id'])) echo '&branch_id=' . $_GET['branch_id'];?>" class="btn btn-primary">View all products</a>
+		<a href="product.php?archived=true<?php if(isset($_GET['branch_id'])) echo '&branch_id=' . $_GET['branch_id'];?>" class="btn btn-primary">View archived products</a>
 	</div>	
 	<table class="table table-bordered" id="table">
 		<thead>
@@ -68,11 +69,15 @@ if(isset($_POST['submit'])){
 			$sql = 'select product.*, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id WHERE product.branch_id=' . $_SESSION['branch_id'];
 			if(@$_GET['replenish'] == 'true')
 				$sql .= ' AND quantity <= critical_lvl';
+			if(@$_GET['archived'] == 'true')
+				$sql .= ' AND product.archived=1';
+			else
+				$sql .= ' AND product.archived!=1';
 		}
 		else{
 			$sql = 'select product.*, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id ';	
 			if(@$_GET['replenish'] == 'true')
-				$sql .= ' WHERE quantity <= critical_lvl';
+				$sql .= ' WHERE archived != 1 AND quantity <= critical_lvl';
 			if(isset($_GET['branch_id']))
 				$sql .= ' AND product.branch_id=' . $_GET['branch_id'];
 		}
@@ -89,9 +94,16 @@ if(isset($_POST['submit'])){
 					<td><?php echo $p->unit_price?></td>
 					<td><?php echo $p->critical_lvl?></td>
 					<?php if($_SESSION['branch_id'] != '3'):?>
-						<td><a href="update_product.php?product_id=<?php echo $p->product_id?>">Update</a> | <a href="delete_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a> | 
-						<a href="#" class="restock" data-toggle="modal" data-target=".bs-example-modal-sm" id="<?php echo $p->product_id;?>">Restock</a></td>
-					
+						<?php if($p->archived == '0'):?>
+						<td>
+						<a class="btn btn-primary" href="update_product.php?product_id=<?php echo $p->product_id?>">Update</a> 
+						<a class="btn btn-danger" href="delete_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to archive this product?')">Archive</a> 
+						<a href="#" class="restock btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm" id="<?php echo $p->product_id;?>">Restock</a>
+						</td>
+						<?php else:?>
+						<td>
+						<a class="btn btn-primary" href="restore_product.php?product_id=<?php echo $p->product_id?>" onclick="return confirm('Are you sure you want to restore this product?')">Restore</a>						</td>
+						<?php endif;?>
 					<?php endif;?>
 				</tr>
 			<?php endforeach;?>
