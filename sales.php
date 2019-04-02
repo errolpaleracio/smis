@@ -105,7 +105,7 @@ $('input[name="submit"]').click(function(){
 		$quantity.val('');
 		$discount.val('0');
 		$('.total').text('Total: Php: ' + total)
-		table.row.add([product_id, product_name, quantity, price * quantity, discount, price * quantity - discount,'<input type="button" name="remove_item" value="Remove Item" class="btn btn-danger">']).draw();
+		table.row.add([product_id, product_name, quantity, price * quantity, discount, price * quantity - discount,'<input type="button" name="remove_item" value="Change" class="btn btn-primary">']).draw();
 		row_index++;
 		$('[name="on_hand"]').val(on_hand-quantity);
 		
@@ -114,6 +114,7 @@ $('input[name="submit"]').click(function(){
 		$quantity.val('');
 	}
 });
+
 function get_total_count(id){
 	var total_count = 0;
 	for(i = 0; i < data_set.length; i++){
@@ -151,21 +152,43 @@ $('#payout').click(function(){
 	}
 });
 $(document).on('click', '[name="remove_item"]', function(){
-	var index = $(this).parents('tr').index()
-	//console.log(row_index);
+	var index = $(this).parents('tr').index();
 	var product_id = data_set[index][0];
 	var quantity = data_set[index][2];
-	data_set.splice(index, 1);
-	var on_hand = $('[name="on_hand"]').val();
-	var selected_item_id = $('[name="product_id"] option:selected').val();
+	var $td = $(this).parents('tr').children('td').eq(2);
+	var $td_price = $(this).parents('tr').children('td').eq(3);
+	var $td_discounted_price = $(this).parents('tr').children('td').eq(5);
+	if($(this).val() == 'Change'){
+		$(this).val('Update');
+		$td.html('<input type="text" name="change_quantity" class="form-control" value=' + quantity + '>');
+		var on_hand = $('[name="on_hand"]').val();
+		var selected_item_id = $('[name="product_id"] option:selected').val();
+		if(product_id == selected_item_id)
+			$('[name="on_hand"]').val(parseInt(on_hand) + parseInt(quantity));
+	}else{
+		$(this).val('Change');
+		quantity = parseInt($td.find('input[name="change_quantity"]').val());
+		$td.html(quantity);
+		data_set[index][2] = quantity;
+		var on_hand = $('[name="on_hand"]').val();
+		var selected_item_id = $('[name="product_id"] option:selected').val();
+		if(product_id == selected_item_id)
+			$('[name="on_hand"]').val(parseInt(on_hand) - parseInt(quantity));
+			$td_price.html(parseInt(data_set[index][2] * data_set[index][3]));
+			$td_price.html(parseInt(data_set[index][2] * data_set[index][3] - data_set[index][4]));
+		var total = 0;
+		for(i = 0; i < data_set.length; i++){
+			total += parseFloat(data_set[i][2] * data_set[i][3] - data_set[i][4]);
+		}
+		$('.total').text('Total: Php: ' + total)	
+	}
 	
-	console.log(data_set);
-	if(product_id == selected_item_id)
-		$('[name="on_hand"]').val(parseInt(on_hand) + parseInt(quantity));
-	
-	table.row($(this).parents('tr')).remove().draw();
+	//data_set.splice(index, 1);	
+	//table.row($(this).parents('tr')).remove().draw();
 	
 });
+
+
 var number = document.getElementById('number');
  
 // Listen for input event on numInput.
