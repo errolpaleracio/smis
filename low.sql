@@ -41,6 +41,31 @@ INSERT INTO `branch` VALUES (1,'Branch 1','Lagasca St. Laoag City'),(2,'Branch 2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `brand`
+--
+
+DROP TABLE IF EXISTS `brand`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `brand` (
+  `brand_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`brand_id`),
+  UNIQUE KEY `brand_name` (`brand_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `brand`
+--
+
+LOCK TABLES `brand` WRITE;
+/*!40000 ALTER TABLE `brand` DISABLE KEYS */;
+INSERT INTO `brand` VALUES (68,'BOSNY'),(58,'Domino'),(69,'DSK'),(55,'E-power'),(57,'Global'),(53,'GPC'),(54,'Kawata'),(65,'KMN'),(50,'KSR'),(62,'MKT'),(66,'Monster'),(49,'Motolight'),(59,'MTR'),(60,'NGK'),(71,'NHK'),(56,'POSH'),(64,'RG3'),(67,'Rizoma'),(61,'Tamago'),(51,'Total'),(52,'Type R'),(63,'Yamaha'),(48,'Yamakoto');
+/*!40000 ALTER TABLE `brand` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product`
 --
 
@@ -55,8 +80,11 @@ CREATE TABLE `product` (
   `critical_lvl` int(11) DEFAULT NULL,
   `archived` bit(1) DEFAULT b'0',
   `branch_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+  `brand_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `brand_id` (`brand_id`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +93,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (11,'Hand Grip (Domino)',150.00,30,30,'\0',1),(12,'Air Filter (Yamakoto)',150.00,250,20,'\0',1),(13,'Handle Lever (MTR)',500.00,70,20,'\0',1),(14,'Horn (Global)',200.00,79,20,'\0',1),(15,'Slider (Rizoma)',350.00,120,40,'\0',1),(16,'Brake Lamp (Type R)',100.00,50,10,'\0',1),(17,'Volt Meter (DSK)',200.00,50,15,'\0',1),(18,'Led (Global)',450.00,85,20,'\0',1),(19,'Ignition Switch (Tamago)',150.00,90,20,'\0',1),(20,'Spark Plug (NGK)',150.00,100,20,'\0',1),(21,'Flasher (POSH)',100.00,120,20,'\0',1),(22,'Break Shoe (Kawata)',100.00,90,15,'\0',1),(23,'Rear Sprocket (KSR)',250.00,120,20,'\0',1),(24,'Side Mirror (KMN)',100.00,110,30,'\0',1),(25,'Flyball (Global)',250.00,90,20,'\0',1),(26,'CDI (E-power)',250.00,100,20,'\0',1),(27,'Bulb (E-power)',35.00,130,20,'\0',1),(28,'Spray Paint (BOSNY)',120.00,90,10,'\0',1),(29,'Oil Filter (Yamaha)',85.00,110,20,'\0',1),(30,'Bering (KSR)',75.00,100,20,'\0',1),(31,'Break Pad (GPC)',100.00,115,20,'\0',1),(32,'Battery (Motolight)',570.00,15,10,'\0',1),(33,'Helmet (NHK)',3000.00,20,5,'\0',1),(34,'Shocks (RG3)',650.00,30,10,'\0',1),(35,'Sit Cover (Monster)',150.00,80,20,'\0',1),(36,'Brake Fluid (Total)',50.00,110,20,'\0',1),(37,'Knee Pad (MKT)',550.00,60,15,'\0',1),(38,'Battery (Motolight)',570.00,60,10,'\0',2),(39,'Head Packing (Gonvince)',250.00,100,10,'\0',2),(40,'Helmet (NHK)',3000.00,40,10,'\0',2),(41,'Electrical Tape (Armak)',30.00,100,20,'\0',2),(42,'Side Gasket (Apple)',85.00,50,10,'\0',2),(43,'Gear Oil (Top 1)',120.00,60,10,'\0',2),(44,'Mirror (Mokoto)',170.00,70,10,'\0',2),(45,'Headlight (Japan)',300.00,95,15,'\0',2),(46,'Tail Light (Japan)',200.00,50,10,'\0',2),(47,'Oil Filter (Yamaha)',85.00,80,15,'\0',2),(48,'Oil Filter (Suzuki)',85.00,60,10,'\0',2),(49,'Oil Filter (Kawasaki)',85.00,65,15,'\0',2),(50,'Spark Plug cap (E-power)',35.00,80,15,'\0',2),(51,'Throttle cable (YSK)',100.00,80,10,'\0',2),(52,'Clutch cable (YSK)',100.00,80,10,'\0',2),(53,'Brake cable (YSK)',100.00,85,10,'\0',2),(54,'Speedo cable (YSK)',100.00,90,15,'\0',2),(55,'Fuel tank cap (KSR)',250.00,80,15,'\0',2),(56,'Sprocket (Sun)',85.00,90,20,'\0',2),(57,'Spray Paint (BOSNY)',120.00,90,10,'\0',2),(58,'Rim (SPD)',1000.00,80,10,'\0',2),(59,'Sit Cover (Monster)',150.00,80,10,'\0',2),(60,'Volt Meter (DSK)',200.00,50,10,'\0',2),(61,'Horn (Global)',200.00,70,15,'\0',2);
+INSERT INTO `product` VALUES (11,'Hand Grip',150.00,220,30,'\0',1,58),(12,'Air Filter',150.00,250,20,'\0',1,48),(13,'Handle Lever',500.00,70,20,'\0',1,59),(14,'Horn',200.00,79,20,'\0',1,57),(15,'Slider (Rizoma)',350.00,115,40,'\0',1,67),(16,'Brake Lamp',100.00,50,10,'\0',1,52),(17,'Volt Meter (DSK)',200.00,50,15,'\0',1,69),(18,'Led (Global)',450.00,85,20,'\0',1,57),(19,'Ignition Switch',150.00,90,20,'\0',1,61),(20,'Spark Plug (NGK)',150.00,100,20,'\0',1,60),(21,'Flasher',100.00,120,20,'\0',1,56),(22,'Break Shoe',100.00,90,15,'\0',1,54),(23,'Rear Sprocket (KSR)',250.00,120,20,'\0',1,50),(24,'Side Mirror (KMN)',100.00,110,30,'\0',1,65),(25,'Flyball',250.00,90,20,'\0',1,57),(26,'CDI',250.00,100,20,'\0',1,55),(27,'Bulb',35.00,130,20,'\0',1,55),(28,'Spray Paint (BOSNY)',120.00,90,10,'\0',1,68),(29,'Oil Filter (Yamaha)',85.00,110,20,'\0',1,63),(30,'Bering',75.00,100,20,'\0',1,50),(31,'Break Pad',100.00,115,20,'\0',1,53),(32,'Battery',570.00,15,10,'\0',1,49),(33,'Helmet',3000.00,20,5,'\0',1,71),(34,'Shocks (RG3)',650.00,30,10,'\0',1,64),(35,'Sit Cover (Monster)',150.00,80,20,'\0',1,66),(36,'Brake Fluid',50.00,110,20,'\0',1,51),(37,'Knee Pad',550.00,60,15,'\0',1,62),(38,'Battery (Motolight)',570.00,60,10,'\0',2,NULL),(39,'Head Packing (Gonvince)',250.00,100,10,'\0',2,NULL),(40,'Helmet (NHK)',3000.00,40,10,'\0',2,NULL),(41,'Electrical Tape (Armak)',30.00,100,20,'\0',2,NULL),(42,'Side Gasket (Apple)',85.00,50,10,'\0',2,NULL),(43,'Gear Oil (Top 1)',120.00,60,10,'\0',2,NULL),(44,'Mirror (Mokoto)',170.00,70,10,'\0',2,NULL),(45,'Headlight (Japan)',300.00,95,15,'\0',2,NULL),(46,'Tail Light (Japan)',200.00,50,10,'\0',2,NULL),(47,'Oil Filter (Yamaha)',85.00,80,15,'\0',2,NULL),(48,'Oil Filter (Suzuki)',85.00,60,10,'\0',2,NULL),(49,'Oil Filter (Kawasaki)',85.00,65,15,'\0',2,NULL),(50,'Spark Plug cap (E-power)',35.00,80,15,'\0',2,NULL),(51,'Throttle cable (YSK)',100.00,80,10,'\0',2,NULL),(52,'Clutch cable (YSK)',100.00,80,10,'\0',2,NULL),(53,'Brake cable (YSK)',100.00,85,10,'\0',2,NULL),(54,'Speedo cable (YSK)',100.00,90,15,'\0',2,NULL),(55,'Fuel tank cap (KSR)',250.00,80,15,'\0',2,NULL),(56,'Sprocket (Sun)',85.00,90,20,'\0',2,NULL),(57,'Spray Paint (BOSNY)',120.00,90,10,'\0',2,NULL),(58,'Rim (SPD)',1000.00,80,10,'\0',2,NULL),(59,'Sit Cover (Monster)',150.00,80,10,'\0',2,NULL),(60,'Volt Meter (DSK)',200.00,50,10,'\0',2,NULL),(61,'Horn (Global)',200.00,70,15,'\0',2,NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +139,7 @@ CREATE TABLE `sales` (
   PRIMARY KEY (`sales_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +148,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-INSERT INTO `sales` VALUES (1,12,10,'2019-04-01',150.00,20.00,1);
+INSERT INTO `sales` VALUES (1,12,10,'2019-04-01',150.00,20.00,1),(2,15,5,'2019-04-02',350.00,20.00,1),(3,11,3,'2019-04-02',150.00,0.00,1),(4,11,7,'2019-04-02',150.00,10.00,1);
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-02  0:03:14
+-- Dump completed on 2019-04-13 20:27:58
