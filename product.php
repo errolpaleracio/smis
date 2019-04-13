@@ -76,7 +76,7 @@ if(isset($_POST['submit'])){
 		<?php 
 		$sql = '';
 		if($_SESSION['branch_id'] != '3'){
-			$sql = 'select product.*, brand_name, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id INNER JOIN brand ON product.brand_id=brand.brand_id WHERE product.branch_id=' . $_SESSION['branch_id'];
+			$sql = 'select product.*, brand_name, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id LEFT OUTER JOIN brand ON product.brand_id=brand.brand_id WHERE product.branch_id=' . $_SESSION['branch_id'];
 			if(@$_GET['replenish'] == 'true')
 				$sql .= ' AND quantity <= critical_lvl';
 			if(@$_GET['archived'] == 'true')
@@ -85,11 +85,16 @@ if(isset($_POST['submit'])){
 				$sql .= ' AND product.archived!=1';
 		}
 		else{
-			$sql = 'select product.*, brand_name, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id INNER JOIN brand ON product.brand_id=brand.brand_id ';	
-			if(@$_GET['replenish'] == 'true')
+			$sql = 'select product.*, brand_name, branch_name from product INNER JOIN branch ON product.branch_id=branch.branch_id LEFT OUTER JOIN brand ON product.brand_id=brand.brand_id ';	
+			if(@$_GET['replenish'] == 'true'){
 				$sql .= ' WHERE archived != 1 AND quantity <= critical_lvl';
-			if(isset($_GET['branch_id']))
-				$sql .= ' AND product.branch_id=' . $_GET['branch_id'];
+				if(isset($_GET['branch_id']))
+					$sql .= ' AND product.branch_id=' . $_GET['branch_id'];
+			}else{
+				if(isset($_GET['branch_id']))
+					$sql .= ' WHERE product.branch_id=' . $_GET['branch_id'];
+			}
+			
 		}
 		$sql .= ' ORDER BY product_id DESC';
 		$stmt = $db->query($sql);
@@ -205,7 +210,7 @@ $(document).ready(function(){
 							if(data == 1){
 								$('#addBrandForm').find('input[name="brand_name"]').val('');
 								alert('Brand successfully added');
-								$('#brandId').load('get_brands.php');
+								
 							}
 						}
 					});

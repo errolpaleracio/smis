@@ -12,7 +12,7 @@ if(isset($_POST['submit'])){
 */
 
 
-$products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['branch_id'] . ' and archived=0')->fetchAll(PDO::FETCH_OBJ);
+$products = $db->query('SELECT product.*, brand.brand_name FROM product INNER JOIN brand ON product.brand_id=brand.brand_id WHERE branch_id=' . $_SESSION['branch_id'] . ' and archived=0 ORDER BY product_name')->fetchAll(PDO::FETCH_OBJ);
 ?>
 <div class="container">
 	<div class="col-sm-9">
@@ -20,14 +20,15 @@ $products = $db->query('SELECT * FROM product WHERE branch_id=' . $_SESSION['bra
 			<input type="hidden" name="price">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Product</label>
-				<div class="col-sm-4">
+				<div class="col-sm-4" id="products">
 					<select name="product_id" class="form-control">
 					<?php foreach($products as $p):?>
-						<option value="<?php echo $p->product_id?>"><?php echo $p->product_name?></option>
+						<option value="<?php echo $p->product_id?>"><?php echo $p->brand_name, ' - ', $p->product_name?></option>
 					<?php endforeach;?> 
 					</select>
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Quantity</label>
 				<div class="col-sm-4">
@@ -187,6 +188,23 @@ $(document).on('click', '[name="remove_item"]', function(){
 	//table.row($(this).parents('tr')).remove().draw();
 	
 });
+
+/*
+function load_products(brand_id){
+	$('#products').load('load_product.php?brand_id=' + brand_id);
+}
+
+function check_brand(){
+	var $brand = $('select[name="brand_id"]');
+	var brand_id = $brand.find('option:selected').val();
+	load_products(brand_id);
+}
+
+check_brand();
+$('select[name="brand_id"]').on('change', function(){
+	check_brand();
+});
+*/
 
 
 var number = document.getElementById('number');
