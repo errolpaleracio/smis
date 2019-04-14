@@ -23,7 +23,7 @@ $products = $db->query('SELECT product.*, brand.brand_name FROM product INNER JO
 				<div class="col-sm-4" id="products">
 					<select name="product_id" class="form-control">
 					<?php foreach($products as $p):?>
-						<option value="<?php echo $p->product_id?>"><?php echo $p->brand_name, ' - ', $p->product_name?></option>
+						<option value="<?php echo $p->product_id?>"><?php echo $p->product_name, ' - ', $p->brand_name?></option>
 					<?php endforeach;?> 
 					</select>
 				</div>
@@ -66,13 +66,13 @@ $products = $db->query('SELECT product.*, brand.brand_name FROM product INNER JO
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th>Product Id</th>
+				<th style="width: 80px">Product Id</th>
 				<th>Product Name</th>
-				<th>Quantity</th>
+				<th style="width: 80px">Quantity</th>
 				<th class="hide_it">Price</th>
-				<th>Discount</th>
-				<th>Discounted Price</th>
-				<th>Action</th>
+				<th style="width: 80px">Discount</th>
+				<th style="width: 150px">Discounted Price</th>
+				<th style="width: 200px">Action</th>
 			</tr>
 		</thead>
 	</table>
@@ -106,7 +106,7 @@ $('input[name="submit"]').click(function(){
 		$quantity.val('');
 		$discount.val('0');
 		$('.total').text('Total: Php: ' + total)
-		table.row.add([product_id, product_name, quantity, price * quantity, discount, price * quantity - discount,'<input type="button" name="remove_item" value="Change" class="btn btn-primary">']).draw();
+		table.row.add([product_id, product_name, quantity, price * quantity, discount, price * quantity - discount,'<input type="button" name="update_item" value="Change" class="btn btn-primary"> <input type="button" name="remove_item" value="Remove Item" class="btn btn-danger">']).draw();
 		row_index++;
 		$('[name="on_hand"]').val(on_hand-quantity);
 		
@@ -152,7 +152,7 @@ $('#payout').click(function(){
 		alert('Must add items first.')
 	}
 });
-$(document).on('click', '[name="remove_item"]', function(){
+$(document).on('click', '[name="update_item"]', function(){
 	var index = $(this).parents('tr').index();
 	var product_id = data_set[index][0];
 	var quantity = data_set[index][2];
@@ -187,6 +187,22 @@ $(document).on('click', '[name="remove_item"]', function(){
 	//data_set.splice(index, 1);	
 	//table.row($(this).parents('tr')).remove().draw();
 	
+});
+
+$(document).on('click', '[name="remove_item"]', function(){
+	var index = $(this).parents('tr').index()
+	//console.log(row_index);
+	var product_id = data_set[index][0];
+	var quantity = data_set[index][2];
+	data_set.splice(index, 1);
+	var on_hand = $('[name="on_hand"]').val();
+	var selected_item_id = $('[name="product_id"] option:selected').val();
+	
+	console.log(data_set);
+	if(product_id == selected_item_id)
+		$('[name="on_hand"]').val(parseInt(on_hand) + parseInt(quantity));
+	
+	table.row($(this).parents('tr')).remove().draw();
 });
 
 /*
