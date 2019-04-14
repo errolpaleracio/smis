@@ -9,7 +9,7 @@ if(basename($_SERVER['PHP_SELF']) != 'register.php'){
 		header('location: home.php');
 	*/
 	if(!isset($_SESSION['name']) && basename($_SERVER['PHP_SELF']) != 'index.php'){
-		header('location: index.php');
+		header('location: dashboard.php');
 		
 	}
 	
@@ -29,6 +29,7 @@ $branch = $db->prepare('SELECT branch_name FROM branch WHERE branch_id=?');
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.css">
 	<link rel="stylesheet" type="text/css" href="css/datatables.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/sb-admin.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/datatables.min.js"></script>
@@ -44,5 +45,3 @@ $branch = $db->prepare('SELECT branch_name FROM branch WHERE branch_id=?');
 	<script type="text/javascript" src="js/datatables/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="js/datatables/buttons.print.min.js"></script>
 </head>
-<body>
-	<?php include $nav_path;?>

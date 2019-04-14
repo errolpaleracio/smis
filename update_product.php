@@ -13,8 +13,21 @@ if(isset($_POST['submit'])){
 $stmt = $db->query('SELECT * FROM PRODUCT WHERE product_id=' . $_GET['product_id']);
 $product = $stmt->fetch(PDO::FETCH_OBJ);
 ?>
-<div class="container">
-	<h3>Update Product</h3>
+<div id="wrapper">
+<?php include 'sb_admin_nav.php'?>
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-12">
+<h1 class="page-header">
+Add Sales 
+</h1>
+<ol class="breadcrumb">
+<li class="active">
+<i class="fa fa-dashboard"></i> Add Sales
+</li>
+</ol>
+</div>
 	<form class="form-horizontal" method="post">
 		<input type="hidden" name="product_id" value="<?php echo $_GET['product_id']?>">
 		<div class="form-group">
@@ -55,6 +68,7 @@ $product = $stmt->fetch(PDO::FETCH_OBJ);
 			</div>
 		</div>						
 	</form>
-</div>
-<?php
-include 'footer.php';
+	</div> <!-- container-fluid -->
+    </div> <!-- page-wrapper -->
+</div><!-- wrapper --> 
+<?php include 'footer.php';

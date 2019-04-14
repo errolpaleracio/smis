@@ -14,7 +14,24 @@ if(isset($_POST['submit'])){
 
 $products = $db->query('SELECT product.*, brand.brand_name FROM product INNER JOIN brand ON product.brand_id=brand.brand_id WHERE branch_id=' . $_SESSION['branch_id'] . ' and archived=0 ORDER BY product_name')->fetchAll(PDO::FETCH_OBJ);
 ?>
-<div class="container">
+<div id="wrapper">
+<?php include 'sb_admin_nav.php'?>
+<div id="page-wrapper">
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-lg-12">
+<h1 class="page-header">
+Add Sales 
+</h1>
+<ol class="breadcrumb">
+<li class="active">
+<i class="fa fa-dashboard"></i> Add Sales
+</li>
+</ol>
+</div>
+
+</div>
 	<div class="col-sm-9">
 		<form class="form-horizontal" method="post" id="salesForm">
 			<input type="hidden" name="price">
@@ -76,7 +93,9 @@ $products = $db->query('SELECT product.*, brand.brand_name FROM product INNER JO
 			</tr>
 		</thead>
 	</table>
-</div>
+</div><!-- container-fluid -->
+</div><!-- page-wrapper -->
+<div><!-- wrapper -->
 <script>
 $('#salesForm').submit(function(e){
 	e.preventDefault();
@@ -236,7 +255,6 @@ number.onkeydown = function(e) {
 </script>
 
 <?php
-include 'footer.php';
 if(isset($_SESSION['branch_id'])){
 	$sql = 'select count(*) as prod_count from product where quantity <= critical_lvl AND branch_id='.$_SESSION['branch_id'];
 	$prod = $db->query($sql);
@@ -246,3 +264,5 @@ if(isset($_SESSION['branch_id'])){
 	
 }
 ?>
+<?php
+include 'footer.php';

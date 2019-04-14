@@ -1,7 +1,7 @@
 <?php
 $nav_path = 'nav.php';
 include 'header.php';
-$sql = 'SELECT sales.*, product_name, branch_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id';
+$sql = 'SELECT sales.*, product_name, branch_name, brand_name FROM sales INNER JOIN product ON sales.product_id=product.product_id INNER JOIN BRANCH ON sales.branch_id=branch.branch_id INNER JOIN brand ON product.brand_id=brand.brand_id ';
 $sql2 = 'SELECT SUM(sales.unit_price * sales.quantity - sales.discount) as total_sales FROM sales';
 if($_SESSION['branch_id'] != '3'){
 	$sql .= ' WHERE sales.branch_id=' . $_SESSION['branch_id'];
@@ -14,7 +14,7 @@ $stmt = $db->query($sql);
 if((@$_GET['search'])){
 	$start = "'" . @$_GET['start_date'] . "'";
 	$end = "'" . @$_GET['end_date'] . "'";
-	$sql .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
+	$sql .= ' AND sold BETWEEN CAST(' . $start . ' AS  DATE) AND CAST(' . $end . ' AS DATE)';
 	$sql2 .= ' AND sold BETWEEN CAST(' . $start . ' AS DATE) AND CAST(' . $end . ' AS DATE)';
 }
 
@@ -25,9 +25,24 @@ $sales = $stmt->fetchAll(PDO::FETCH_OBJ);
 $sth = $db->query($sql2);
 $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 ?>
-<div class="container">
-    
-	<h1>Total Sales: <?php echo $total_sales->total_sales?></h1>
+<div id="wrapper">
+<?php include 'sb_admin_nav.php'?>
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-12">
+<h1 class="page-header">
+Add Sales 
+</h1>
+<ol class="breadcrumb">
+<li class="active">
+<i class="fa fa-dashboard"></i> Add Sales
+</li>
+</ol>
+</div>
+
+	<h3>Total Sales: <?php echo $total_sales->total_sales?></h3>
+
 	<div class="row">
 		<form method="GET" action="">
 		<?php if(isset($_GET['branch_id'])):?>
@@ -65,7 +80,7 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 			<?php foreach($sales as $s):?>
 				<tr>
 					<td><?php echo $s->sales_id?></td>
-					<td><?php echo $s->product_name?></td>
+					<td><?php echo $s->product_name, ' - ', $s->brand_name?></td>
 					<td><?php echo $s->quantity?></td>
 					<td><?php echo ($s->unit_price * $s->quantity)?></td>
 					<td><?php echo $s->discount?></td>
@@ -76,7 +91,9 @@ $total_sales = $sth->fetch(PDO::FETCH_OBJ);
 			<?php endforeach;?>
 		</tbody>
 	</table>
-</div>
+</div><!-- container-fluid -->
+</div><!-- page-wrapper -->
+<div><!-- wrapper -->
 <script>
 $('.input-daterange').datepicker({
 	todayBtn:'linked',
