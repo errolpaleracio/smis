@@ -13,7 +13,9 @@ if($result){
 	$_SESSION['role_id'] = $result['role_id'];
 	$_SESSION['name'] = $result['name'];
 	$_SESSION['branch_id'] = $result['branch_id'];
-	header('location: dashboard.php');
+	echo 1;
+	//header('location: dashboard.php');
 }else{
-	header('location: index.php');
+	//header('location: index.php');
+	echo 0;
 }

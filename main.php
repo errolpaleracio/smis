@@ -88,6 +88,20 @@ include 'db.php';
   </div>
 </div>
 <script>
+
+$('#loginForm1').submit(function(e){
+			e.preventDefault();
+			$.post('login.php', $(this).serialize(), function(data, textStatus, xhr) {
+				if(xhr.responseText == 1){
+					window.location.href='dashboard.php';
+				}
+				else{
+					alert('Invalid username or password.')
+
+				}
+			});
+			
+		});
 $('#getPasswordHintForm').on('submit', function(e){
 			var username = $('#checkUsername').val();
 			e.preventDefault();
