@@ -22,6 +22,7 @@
                         <li>
                             <a href="#" data-toggle="modal" data-target="#changePasswordModal"><i class="fa fa-fw fa-gear"></i> Change Password</a>
                         </li>
+                        <li><a href="create-account.php"><i class="fa fa-shopping-cart"></i> CREATE ACCOUNT</a></li>
                         <li class="divider"></li>
                         <li>
                             <a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>

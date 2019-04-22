@@ -24,8 +24,22 @@ if(isset($_POST['submit'])){
 }
 ?>
 
-<div class="container">
-	<h3>Create Account</h3>
+<div id="wrapper">
+<?php include 'sb_admin_nav.php'?>
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Create Account
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </li>
+        </ol>
+    </div>
+</div>
 	<form class="form-horizontal" method="post" id="createAccountForm">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Username</label>
@@ -117,6 +131,8 @@ if(isset($_POST['submit'])){
 		<?php endforeach;?>
 		</tbody>
 	</table>
+</div>
+</div>
 </div>
 
 

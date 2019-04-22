@@ -61,13 +61,19 @@ if($_SESSION['branch_id'] == '3'){
                     </div>
                 </div>
             </div>
-            <a href="sales.php">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="caret"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="product.php?branch_id=1">Branch 1</a></li>
+                    <li><a href="product.php?branch_id=2">Branch 2</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
@@ -83,13 +89,19 @@ if($_SESSION['branch_id'] == '3'){
                     </div>
                 </div>
             </div>
-            <a href="product.php">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="caret"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="view_sales.php?branch_id=1">Branch 1</a></li>
+                    <li><a href="view_sales.php?branch_id=2">Branch 2</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     
