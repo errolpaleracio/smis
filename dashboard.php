@@ -71,8 +71,8 @@ if($_SESSION['branch_id'] == '3'){
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="product.php?branch_id=1">Branch 1</a></li>
-                        <li><a href="product.php?branch_id=2">Branch 2</a></li>
+                        <li><a href="view_sales.php?branch_id=1">Branch 1</a></li>
+                        <li><a href="view_sales.php?branch_id=2">Branch 2</a></li>
                     </ul>
                 </div>
             <?php else:?>
@@ -109,8 +109,8 @@ if($_SESSION['branch_id'] == '3'){
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="view_sales.php?branch_id=1">Branch 1</a></li>
-                        <li><a href="view_sales.php?branch_id=2">Branch 2</a></li>
+                        <li><a href="product.php?branch_id=1">Branch 1</a></li>
+                        <li><a href="product.php?branch_id=2">Branch 2</a></li>
                     </ul>
                 </div>
                 <?php else:?>

@@ -19,7 +19,20 @@ if(isset($_POST['submit'])){
             <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                           Products
+                        <?php 
+                           if(isset($_GET['branch_id'])){
+                                echo 'Branch ' . $_GET['branch_id'];
+                           }else{
+                            if(isset($_GET['replenished']))
+                                echo 'Products to be replenished';
+                            else if(isset($_GET['archived']))
+                                echo 'Archived products';
+                            else
+                                echo 'All products';
+                            }
+                        ?>
+                               
+                           
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
