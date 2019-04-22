@@ -61,19 +61,29 @@ if($_SESSION['branch_id'] == '3'){
                     </div>
                 </div>
             </div>
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <?php if($_SESSION['branch_id'] == '3'):?>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="caret"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="product.php?branch_id=1">Branch 1</a></li>
+                        <li><a href="product.php?branch_id=2">Branch 2</a></li>
+                    </ul>
+                </div>
+            <?php else:?>
+                <a href="view_sales.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="caret"></i></span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="product.php?branch_id=1">Branch 1</a></li>
-                    <li><a href="product.php?branch_id=2">Branch 2</a></li>
-                </ul>
-            </div>
+            <?php endif;?>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
@@ -89,19 +99,29 @@ if($_SESSION['branch_id'] == '3'){
                     </div>
                 </div>
             </div>
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="caret"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="view_sales.php?branch_id=1">Branch 1</a></li>
-                    <li><a href="view_sales.php?branch_id=2">Branch 2</a></li>
-                </ul>
-            </div>
+            <?php if($_SESSION['branch_id'] == '3'):?>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="caret"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="view_sales.php?branch_id=1">Branch 1</a></li>
+                        <li><a href="view_sales.php?branch_id=2">Branch 2</a></li>
+                    </ul>
+                </div>
+                <?php else:?>
+                    <a href="product.php">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>    
+                <?php endif;?>
         </div>
     </div>
     
